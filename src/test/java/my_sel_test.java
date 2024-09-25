@@ -17,14 +17,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CallbackTest {
     private WebDriver driver;
+
     @BeforeAll
     static void setUpAll() {
 // убедитесь, что файл chromedriver.exe расположен именно в каталоге C:\tmp
-        System.setProperty("webdriver.chrome.driver", "./driver/chromedriver.exe");
+        WebDriverManager.chromedriver().setup();
+        //System.setProperty("webdriver.chrome.driver", "./driver/chromedriver.exe");
     }
     @BeforeEach
     void setUp() {
-        driver = new ChromeDriver();
+
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--headless");
+        driver = new ChromeDriver(options);
+
     }
     @AfterEach
     void tearDown() {
